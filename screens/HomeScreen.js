@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, Button, StyleSheet } from 'react-native';
 
 const HomeScreen = ({ navigation }) => {
+
     return (
         <View style={styles.container}>
             <Text>Home Screen</Text>
@@ -20,6 +21,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'white'
+        backgroundColor: '#abdbe3'
     },
 });
