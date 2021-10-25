@@ -1,16 +1,19 @@
 import React from "react";
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet, ImageBackground, Image } from 'react-native';
+import TypingText from 'react-native-typing-text';
 
 const HomeScreen = ({ navigation }) => {
 
     return (
-        <View style={styles.container}>
-            <Text>Home Screen</Text>
-            <Button
-                title="Clicl Here"
-                onPress={() => alert('Button Clicked')}
-            />
-        </View>
+        <ImageBackground source={require('../assets/Photos/church.jpg')} style={styles.container}>
+            <View style={styles.logo}>
+                <Image source={require('../assets/icons/logo.png')} style={{height: 115, width: 250}}/>
+                
+            </View>
+            <View style={styles.text}>
+                <Text style={{color: 'white', fontSize: 30}}>What to do in Helsinki? Search event from App!</Text>
+            </View>
+        </ImageBackground>
     );
 };
 
@@ -21,6 +24,17 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#abdbe3'
     },
+    logo: {
+        flex: 1,
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+        top: 10,
+    },
+    text: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        bottom: 100
+    }
 });

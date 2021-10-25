@@ -14,15 +14,16 @@ const SearchScreen = ({ navigation }) => {
         .catch((error) => {
             Alert.alert('Error', error);
         });
-    });
-
+    }, []);
+    
     return (
         <View style={styles.container}>
             <Text>Search Screen</Text>
+            
             <FlatList
                 style={{marginLeft: "5%"}}
-                keyExtractor={item => item.id}
-                renderItem={({item}) => <Text>{item.id}</Text>}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({item}) => <Text>{item.data.name}</Text>}
             />
         </View>
     );
