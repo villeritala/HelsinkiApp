@@ -8,10 +8,9 @@ const HomeScreen = ({ navigation }) => {
         <ImageBackground source={require('../assets/Photos/church.jpg')} style={styles.container}>
             <View style={styles.logo}>
                 <Image source={require('../assets/icons/logo.png')} style={{height: 115, width: 250}}/>
-                
             </View>
             <View style={styles.text}>
-                <Text style={{color: 'white', fontSize: 30}}>What to do in Helsinki? Search event from App!</Text>
+                <Text style={{color: 'white', fontSize: 30}}>Mitä tehdä Helsingissä? Etsi tapahtumia sovelluksen avulla!</Text>
             </View>
         </ImageBackground>
     );

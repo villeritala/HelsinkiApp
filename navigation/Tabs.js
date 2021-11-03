@@ -41,7 +41,6 @@ const Tabs = () => {
                             />
                             <Text
                                 style={{color: focused ? '#21130d' : '#abdbe3' }}>    
-                                HOME
                             </Text>
                         </View>
                     ),
@@ -61,7 +60,6 @@ const Tabs = () => {
                             />
                             <Text
                                 style={{color: focused ? '#21130d' : '#abdbe3' }}>    
-                                SEARCH
                             </Text>
                         </View>
                     ),
@@ -81,7 +79,6 @@ const Tabs = () => {
                             />
                             <Text
                                 style={{color: focused ? '#21130d' : '#abdbe3' }}>    
-                                MY EVENTS
                             </Text>
                         </View>
                     ),
@@ -101,7 +98,6 @@ const Tabs = () => {
                             />
                             <Text
                                 style={{color: focused ? '#21130d' : '#abdbe3' }}>    
-                                CALENDAR
                             </Text>
                         </View>
                     ),
