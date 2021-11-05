@@ -8,12 +8,7 @@ const db = SQLite.openDatabase('eventdb.db'); //luodaan tietokanta
 const SearchScreen = ({ navigation }) => {
 
     const [events, setEvents] = useState([]);
-
     const [savedEvent, setSavedEvent] = useState([]);
-    const [title, setTitle] = useState('');
-    const [info, setInfo] = useState('');
-    const [place, setPlace] = useState('');
-    const [time, setTime] = useState('');
     
     useEffect (() => {
         fetch(`https://open-api.myhelsinki.fi/v1/events/`)
@@ -29,14 +24,15 @@ const SearchScreen = ({ navigation }) => {
     //luodaan taulu
     useEffect(() => {
         db.transaction(tx => {
-            tx.executeSql('create table if not exists course (id integer primary key not null, title text, info text, place text, time text);');
+            tx.executeSql('create table if not exists event (id integer primary key not null, title text, info text, place text, time text);');
         }, null, updateList)
     }, []);
 
-    //tallennetaan event
-    const saveItem = () => {
+    //tallennetaan event-tauluun
+    const saveItem = (name, intro, street, postal, city, date) => {
+        console.log(name, intro, street, postal, city, date);
         db.transaction(tx => {
-            tx.executeSql('insert into event (title, info, place, time) values (?, ?, ?, ?);', [title, info, place, time]);    
+            tx.executeSql('insert into event (name, intro, street, postal, city, date) values (?, ?, ?, ?, ?, ?);', [name, intro, street, postal, city, date]);    
           }, null, updateList
         )
     }
@@ -48,7 +44,7 @@ const SearchScreen = ({ navigation }) => {
             setSavedEvent(rows._array)
           ); 
         });
-      }
+    }
 
     const listSeparator = () => {
         return (
@@ -60,16 +56,27 @@ const SearchScreen = ({ navigation }) => {
             }}
           />
         );
-      };
+    };
+
     return (
             
             <View style={styles.container}>
+                <View style={styles.picker}>
+                    
+                </View>
                     <FlatList
                         style={{marginLeft: "5%"}}
                         keyExtractor={item => item.id}
                         renderItem={({item}) =>
                         <View>
-                            <Image source={require('../assets/icons/pin.png')} style={{height: 40, width: 40}}/>
+                            <Button onPress={() => saveItem(
+                                item.name.fi, 
+                                item.description.intro, 
+                                item.location.address.street_address, 
+                                item.location.address.postal_code,
+                                item.location.address.locality,
+                                item.event_dates.starting_day
+                                )} title="Save"/> 
                             <Text style={{fontWeight: "bold", height: 50}} >{item.name.fi}</Text>
                             <Text>{item.description.intro}</Text>
                             <Text>Paikka: {item.location.address.street_address}, {item.location.address.postal_code}, {item.location.address.locality}</Text>
@@ -96,8 +103,7 @@ const styles = StyleSheet.create({
     picker: {
         flex: 2,
         width: 100,
-        marginTop: 20,
-        alignItems: 'center', 
-        justifyContent: 'space-around',
+        marginTop: 0,
+        justifyContent: 'flex-start',
     },
 });
