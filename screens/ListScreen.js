@@ -51,12 +51,11 @@ const ListScreen = ({ navigation }) => {
                 keyExtractor={item => item.id}
                 renderItem={({item}) =>
                 <View>
+                    <Button title="Poista"/>
                     <Text style={{fontWeight: "bold", height: 50}}>{item.name}</Text>
                     <Text>{item.intro}</Text>
                     <Text>Paikka: {item.street}, {item.postal}, {item.city}</Text>
-                    <Text>Aika:
-                        {Moment(item.date).format('DD/MM/YYYY HH:mm')}
-                    </Text>
+                    
                     <Button 
                         title="Done"
                         type="outline"
@@ -77,13 +76,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         backgroundColor: '#abdbe3'
     },
-    listcontainer: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        backgroundColor: '#abdbe3'
-    },
+    
 });

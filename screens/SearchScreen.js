@@ -24,7 +24,7 @@ const SearchScreen = ({ navigation }) => {
     //luodaan taulu
     useEffect(() => {
         db.transaction(tx => {
-            tx.executeSql('create table if not exists event (id integer primary key not null, title text, info text, place text, time text);');
+            tx.executeSql('create table if not exists event (id integer primary key not null, name text, intro text, street text, postal int, city text, date text);');
         }, null, updateList)
     }, []);
 
@@ -62,7 +62,7 @@ const SearchScreen = ({ navigation }) => {
             
             <View style={styles.container}>
                 <View style={styles.picker}>
-                    
+                
                 </View>
                     <FlatList
                         style={{marginLeft: "5%"}}
