@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Button, StyleSheet, FlatList } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Moment from 'moment';
 import * as SQLite from 'expo-sqlite';
 
@@ -45,27 +46,28 @@ const ListScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text>My Events Screen</Text>
+            <View style={styles.flatlist}>
             <FlatList 
                 style={{marginLeft : "5%"}}
                 keyExtractor={item => item.id}
                 renderItem={({item}) =>
                 <View>
-                    <Button title="Poista"/>
-                    <Text style={{fontWeight: "bold", height: 50}}>{item.name}</Text>
-                    <Text>{item.intro}</Text>
-                    <Text>Paikka: {item.street}, {item.postal}, {item.city}</Text>
-                    
-                    <Button 
-                        title="Done"
-                        type="outline"
-                        style={{marginLeft:10}} 
+                    <Text style={{fontWeight: "bold"}}>{item.name}</Text>
+                    <Icon 
+                        name="trash"
+                        size={30}
+                        style={{marginLeft: '87%'}} 
                         onPress={() => deleteItem(item.id)}
                     />
+                    <Text>{item.intro}</Text>
+                    <Text>Paikka: {item.street}, {item.postal}, {item.city}</Text>
+                    <Text>:Aika: {Moment(item.date).format('DD/MM/YYYY HH:mm')}</Text>
                 </View>} 
                     data={savedEvent} 
                     ItemSeparatorComponent={listSeparator} 
-            />  
+            
+            /> 
+            </View> 
         </View>
     );
 };
@@ -77,7 +79,10 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#abdbe3'
+        backgroundColor: '#abdbe3',
+    },
+    flatlist: {
+        top: 30
     },
     
 });

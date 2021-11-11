@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Button, StyleSheet, FlatList, Image} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Moment from 'moment';
 import * as SQLite from 'expo-sqlite';
 
@@ -62,22 +63,20 @@ const SearchScreen = ({ navigation }) => {
             
             <View style={styles.container}>
                 <View style={styles.picker}>
-                
-                </View>
                     <FlatList
                         style={{marginLeft: "5%"}}
                         keyExtractor={item => item.id}
                         renderItem={({item}) =>
                         <View>
-                            <Button onPress={() => saveItem(
+                            <Text style={{fontWeight: "bold"}}> {item.name.fi}</Text>
+                            <Icon name="bookmark" size={30} style={{marginLeft: '87%'}} onPress={() => saveItem(
                                 item.name.fi, 
                                 item.description.intro, 
                                 item.location.address.street_address, 
                                 item.location.address.postal_code,
                                 item.location.address.locality,
                                 item.event_dates.starting_day
-                                )} title="Save"/> 
-                            <Text style={{fontWeight: "bold", height: 50}} >{item.name.fi}</Text>
+                                )} />
                             <Text>{item.description.intro}</Text>
                             <Text>Paikka: {item.location.address.street_address}, {item.location.address.postal_code}, {item.location.address.locality}</Text>
                             <Text>Aika:
@@ -87,7 +86,7 @@ const SearchScreen = ({ navigation }) => {
                     data={events}
                     ItemSeparatorComponent={listSeparator}/>
             </View>
-
+        </View>            
     );
 };
 
@@ -101,9 +100,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#abdbe3'
     },
     picker: {
-        flex: 2,
-        width: 100,
-        marginTop: 0,
+        flex: 1,
         justifyContent: 'flex-start',
+        top: 30,
     },
 });

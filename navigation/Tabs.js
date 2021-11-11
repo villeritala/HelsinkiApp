@@ -5,6 +5,7 @@ import CalendarScreen from '../screens/Calendar';
 import HomeScreen from '../screens/HomeScreen';
 import ListScreen from '../screens/ListScreen';
 import SearchScreen from '../screens/SearchScreen';
+import LoginScreen from '../screens/LoginScreen';
 import { View, Image, Text } from 'react-native';
 
 const Tab = createBottomTabNavigator();
@@ -13,6 +14,7 @@ const Tabs = () => {
     return(
         <Tab.Navigator
         screenOptions={{
+            headerShown: false,
             tabBarShowLabel: false,
             tabBarStyle: {
                 position: 'absolute',
@@ -26,7 +28,7 @@ const Tabs = () => {
             }
           }}
         >
-            <Tab.Screen name="Home" component={HomeScreen} 
+            <Tab.Screen name="Kirjautumien" component={LoginScreen} 
                 options={{
                     tabBarIcon: ({focused}) => (
                         <View style={{alignItems: 'center', justifyContent: 'center', top: 5}}>
@@ -40,12 +42,33 @@ const Tabs = () => {
                                 }}
                             />
                             <Text
-                                style={{color: focused ? '#21130d' : '#abdbe3' }}>    
+                                style={{color: focused ? '#21130d' : '#abdbe3' }}> 
+                                Koti   
                             </Text>
                         </View>
                     ),
             }}/>
-            <Tab.Screen name="Search" component={SearchScreen}
+            <Tab.Screen name="Koti" component={HomeScreen} 
+                options={{
+                    tabBarIcon: ({focused}) => (
+                        <View style={{alignItems: 'center', justifyContent: 'center', top: 5}}>
+                            <Image
+                                source={require('../assets/icons/home.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                    tintColor: focused ? '#21130d' : '#abdbe3',
+                                }}
+                            />
+                            <Text
+                                style={{color: focused ? '#21130d' : '#abdbe3' }}> 
+                                Koti   
+                            </Text>
+                        </View>
+                    ),
+            }}/>
+            <Tab.Screen name="Haku" component={SearchScreen}
                 options={{
                     tabBarIcon: ({focused}) => (
                         <View style={{alignItems: 'center', justifyContent: 'center', top: 5}}>
@@ -59,12 +82,13 @@ const Tabs = () => {
                                 }}
                             />
                             <Text
-                                style={{color: focused ? '#21130d' : '#abdbe3' }}>    
+                                style={{color: focused ? '#21130d' : '#abdbe3' }}>
+                                Haku    
                             </Text>
                         </View>
                     ),
             }}/>
-            <Tab.Screen name="My Events" component={ListScreen}
+            <Tab.Screen name="Tallennetut tapahtumat" component={ListScreen}
                 options={{
                     tabBarIcon: ({focused}) => (
                         <View style={{alignItems: 'center', justifyContent: 'center', top: 5}}>
@@ -78,12 +102,13 @@ const Tabs = () => {
                                 }}
                             />
                             <Text
-                                style={{color: focused ? '#21130d' : '#abdbe3' }}>    
+                                style={{color: focused ? '#21130d' : '#abdbe3' }}>
+                                Tallennetut    
                             </Text>
                         </View>
                     ),
             }}/>
-            <Tab.Screen name="Calendar" component={CalendarScreen}
+            <Tab.Screen name="Kalenteri" component={CalendarScreen}
                 options={{
                     tabBarIcon: ({focused}) => (
                         <View style={{alignItems: 'center', justifyContent: 'center', top: 5}}>
@@ -97,7 +122,8 @@ const Tabs = () => {
                                 }}
                             />
                             <Text
-                                style={{color: focused ? '#21130d' : '#abdbe3' }}>    
+                                style={{color: focused ? '#21130d' : '#abdbe3' }}> 
+                                Kalenteri   
                             </Text>
                         </View>
                     ),
