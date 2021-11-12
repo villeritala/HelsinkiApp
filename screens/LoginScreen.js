@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/core";
 import { View, StyleSheet, ImageBackground, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, Text } from 'react-native';
 import firebase from '../firebase';
-import auth from '../firebase';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
 
 
 
 const LoginScreen = () => {
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -17,7 +17,7 @@ const LoginScreen = () => {
     useEffect(() =>  {
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (user) {
-                navigation.navigate("Home")
+                navigation.navigate("Koti")
             }
         })
         return unsubscribe

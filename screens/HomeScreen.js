@@ -1,18 +1,36 @@
 import React, { useState } from "react";
-import { View, StyleSheet, ImageBackground, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import Tabs from "../navigation/Tabs";
+import { View, StyleSheet, ImageBackground, Image, TouchableOpacity, Text } from 'react-native';
+import { useNavigation } from "@react-navigation/core";
+import firebase from '../firebase';
+import { getAuth} from 'firebase/auth'
 
-const HomeScreen = ({ navigation }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+const HomeScreen = ({}) => {
+    
+    const auth = getAuth(firebase)
+    const navigation = useNavigation()
+
+    const handleSignOut = () => {
+        auth.signOut()
+        .then(() => {
+            navigation.navigate("Kirjautuminen")
+        })
+        .catch(error => alert(error.message))
+    }
 
     return (
+        
         <ImageBackground source={require('../assets/Photos/church.jpg')} style={styles.container}>
             <View style={styles.logoContainer}>
                 <Image source={require('../assets/icons/logo.png')} style={{height: 115, width: 250}}/>
             </View>
-            
+            <View style={styles.container}>
+                <TouchableOpacity
+                    onPress={handleSignOut}
+                    style={styles.button}
+                >
+                    <Text style={styles.buttonText}>Kirjaudu ulos</Text>
+                </TouchableOpacity>
+            </View>
             
         </ImageBackground>
     );
@@ -31,17 +49,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         top: 40,
     },
-    login: {
-        bottom: '15%',
-        width: '80%',
-    }, 
-    input: {
-        backgroundColor: 'white',
-        paddingHorizontal: 15,
-        paddingVertical: 10,
-        borderRadius: 10,
-        marginTop: 5,
-    },
     buttonContainer: {
         width: '60%',
         bottom: '15%',
@@ -50,7 +57,7 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: 'blue',
-        width: '100%',
+        width: 200,
         padding: 10,
         borderRadius: 30,
         alignItems: 'center'
@@ -62,9 +69,7 @@ const styles = StyleSheet.create({
         borderWidth: 2
     },
     buttonText: {
-        color: 'white'
+        color: 'white',
+        fontSize: 20
     },
-    buttonOutlineText: {
-
-    }
 });
