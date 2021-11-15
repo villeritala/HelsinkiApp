@@ -29,18 +29,7 @@ const Tabs = () => {
             }
           }}
         >
-            <Tab.Screen name="Kirjautuminen" component={LoginScreen} 
-                options={{
-                    tabBarIcon: ({focused}) => (
-                        <View style={{alignItems: 'center', justifyContent: 'center', top: 5}}>
-                            
-                            <Text
-                                style={{color: focused ? '#21130d' : '#abdbe3' }}> 
-                                Login   
-                            </Text>
-                        </View>
-                    ),
-            }}/>
+            
             <Tab.Screen name="Koti" component={HomeScreen} 
                 options={{
                     tabBarIcon: ({focused}) => (

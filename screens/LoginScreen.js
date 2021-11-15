@@ -10,6 +10,7 @@ const LoginScreen = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isLogedIn, setIsLogedIn] = useState(false);
 
     const auth = getAuth(firebase)
     const navigation = useNavigation()
@@ -18,6 +19,7 @@ const LoginScreen = () => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (user) {
                 navigation.navigate("Koti")
+                setIsLogedIn(true)
             }
         })
         return unsubscribe

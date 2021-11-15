@@ -1,17 +1,18 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import Tabs from './navigation/Tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import StackNav from './navigation/Stacks';
 
-
-const Stack = createStackNavigator();
-
-
-const App = () => {
+const App = ({ isLogedIn }) => {
 
   return(
     <NavigationContainer>
-      <Tabs/>
+      {isLogedIn ? (
+        <Tabs/>
+      ) : (
+        <StackNav/>
+      )
+      }
     </NavigationContainer>
     
   );
