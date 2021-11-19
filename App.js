@@ -7,12 +7,14 @@ const App = ({ isLogedIn }) => {
 
   return(
     <NavigationContainer>
-      {isLogedIn ? (
-        <Tabs/>
-      ) : (
-        <StackNav/>
-      )
+      {
+        isLogedIn ? (
+          <Tabs/>
+        ) : (
+          <StackNav/>
+        )
       }
+      
     </NavigationContainer>
     
   );

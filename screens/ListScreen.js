@@ -36,9 +36,9 @@ const ListScreen = ({ navigation }) => {
         return (
           <View
             style={{
-              height: 1,
-              width: "90%",
-              backgroundColor: "black",
+              height: 5,
+              width: "100%",
+              backgroundColor: '#abdbe3',
             }}
           />
         );
@@ -46,12 +46,11 @@ const ListScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.flatlist}>
+            <View style={styles.picker}>
             <FlatList 
-                style={{marginLeft : "5%"}}
                 keyExtractor={item => item.id}
                 renderItem={({item}) =>
-                <View>
+                <View style={styles.event}>
                     <Text style={{fontWeight: "bold"}}>{item.name}</Text>
                     <Icon 
                         name="trash"
@@ -61,7 +60,7 @@ const ListScreen = ({ navigation }) => {
                     />
                     <Text>{item.intro}</Text>
                     <Text>Paikka: {item.street}, {item.postal}, {item.city}</Text>
-                    <Text>:Aika: {Moment(item.date).format('DD/MM/YYYY HH:mm')}</Text>
+                    <Text>Aika: {Moment(item.date).format('DD/MM/YYYY HH:mm')}</Text>
                 </View>} 
                     data={savedEvent} 
                     ItemSeparatorComponent={listSeparator} 
@@ -78,11 +77,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         backgroundColor: '#abdbe3',
     },
-    flatlist: {
-        top: 30
+    picker: {
+        flex: 1,
+        top: 30,
+        padding: 4,
+        backgroundColor: '#abdbe3'
+    },
+    event: {
+        flex:2,justifyContent:'space-between',padding:10, backgroundColor: 'white', borderRadius: 10
     },
     
 });

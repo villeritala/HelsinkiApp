@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Button, StyleSheet, FlatList, Image} from 'react-native';
+import { View, Text, StyleSheet, FlatList, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Moment from 'moment';
 import * as SQLite from 'expo-sqlite';
@@ -22,6 +22,7 @@ const SearchScreen = ({ navigation }) => {
         });
     }, []);
 
+
     //luodaan taulu
     useEffect(() => {
         db.transaction(tx => {
@@ -31,11 +32,11 @@ const SearchScreen = ({ navigation }) => {
 
     //tallennetaan event-tauluun
     const saveItem = (name, intro, street, postal, city, date) => {
-        console.log(name, intro, street, postal, city, date);
         db.transaction(tx => {
             tx.executeSql('insert into event (name, intro, street, postal, city, date) values (?, ?, ?, ?, ?, ?);', [name, intro, street, postal, city, date]);    
           }, null, updateList
         )
+        Alert.alert('Tapahtuma tallennettu Tallennetut-osioon')
     }
 
     //päivitetään lista
@@ -51,9 +52,9 @@ const SearchScreen = ({ navigation }) => {
         return (
           <View
             style={{
-              height: 1,
-              width: "90%",
-              backgroundColor: "black",
+              height: 5,
+              width: "100%",
+              backgroundColor: '#abdbe3',
             }}
           />
         );
@@ -63,28 +64,28 @@ const SearchScreen = ({ navigation }) => {
             
             <View style={styles.container}>
                 <View style={styles.picker}>
-                    <FlatList
-                        style={{marginLeft: "5%"}}
-                        keyExtractor={item => item.id}
-                        renderItem={({item}) =>
-                        <View>
-                            <Text style={{fontWeight: "bold"}}> {item.name.fi}</Text>
-                            <Icon name="bookmark" size={30} style={{marginLeft: '87%'}} onPress={() => saveItem(
-                                item.name.fi, 
-                                item.description.intro, 
-                                item.location.address.street_address, 
-                                item.location.address.postal_code,
-                                item.location.address.locality,
-                                item.event_dates.starting_day
-                                )} />
-                            <Text>{item.description.intro}</Text>
-                            <Text>Paikka: {item.location.address.street_address}, {item.location.address.postal_code}, {item.location.address.locality}</Text>
-                            <Text>Aika:
-                                {Moment(item.event_dates.starting_day).format('DD/MM/YYYY HH:mm')}
-                            </Text>
-                        </View>}
-                    data={events}
-                    ItemSeparatorComponent={listSeparator}/>
+                        <FlatList
+                            
+                            keyExtractor={item => item.id}
+                            renderItem={({item}) =>
+                            <View style={styles.event}>
+                                <Text style={{fontWeight: "bold"}}> {item.name.fi}</Text>
+                                <Icon name="bookmark" size={30} style={{marginLeft: '87%'}} onPress={() => saveItem(
+                                    item.name.fi, 
+                                    item.description.intro, 
+                                    item.location.address.street_address, 
+                                    item.location.address.postal_code,
+                                    item.location.address.locality,
+                                    item.event_dates.starting_day
+                                    )} />
+                                <Text>{item.description.intro}</Text>
+                                <Text>Paikka: {item.location.address.street_address}, {item.location.address.postal_code}, {item.location.address.locality}</Text>
+                                <Text>Aika:
+                                    {Moment(item.event_dates.starting_day).format('DD.MM.YYYY HH:mm')}
+                                </Text>
+                            </View>}
+                        data={events}
+                        ItemSeparatorComponent={listSeparator}/>
             </View>
         </View>            
     );
@@ -97,11 +98,19 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'flex-start',
-        backgroundColor: '#abdbe3'
+        backgroundColor: '#abdbe3',
     },
     picker: {
         flex: 1,
-        justifyContent: 'flex-start',
         top: 30,
+        padding: 10,
+        backgroundColor: '#abdbe3'
+    },
+    event: {
+        flex:1,
+        justifyContent:'space-between',
+        padding:10, 
+        backgroundColor: 'white', 
+        borderRadius: 10
     },
 });

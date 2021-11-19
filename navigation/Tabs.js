@@ -26,6 +26,11 @@ const Tabs = () => {
                 backgroundColor: 'white',
                 borderRadius: 15,
                 height: 65,
+                borderStyle: 'solid',
+                borderColor: 'gray',
+                borderWidth: 1,
+                borderTopWidth: 1,
+                borderTopColor: 'gray'
             }
           }}
         >
