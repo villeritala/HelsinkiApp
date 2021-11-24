@@ -6,7 +6,7 @@ import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase('eventdb.db'); //luodaan tietokanta
 
-const ListScreen = ({ navigation }) => {
+const ListScreen = () => {
 
     const [savedEvent, setSavedEvent] = useState([]);
 
@@ -55,7 +55,7 @@ const ListScreen = ({ navigation }) => {
                     <Icon 
                         name="trash"
                         size={30}
-                        style={{marginLeft: '87%'}} 
+                        style={{marginLeft: '90%'}} 
                         onPress={() => deleteItem(item.id)}
                     />
                     <Text>{item.intro}</Text>
@@ -83,11 +83,15 @@ const styles = StyleSheet.create({
     picker: {
         flex: 1,
         top: 30,
-        padding: 4,
+        padding: 6,
         backgroundColor: '#abdbe3'
     },
     event: {
-        flex:2,justifyContent:'space-between',padding:10, backgroundColor: 'white', borderRadius: 10
+        flex: 2,
+        justifyContent:'space-between',
+        padding: 20, 
+        backgroundColor: 'white', 
+        borderRadius: 10
     },
     
 });

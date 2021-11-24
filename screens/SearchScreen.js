@@ -1,27 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, Alert} from 'react-native';
+import { View, Text, StyleSheet, FlatList, Alert, Button} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Moment from 'moment';
+import DatePicker from 'react-native-datepicker';
 import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase('eventdb.db'); //luodaan tietokanta
 
-const SearchScreen = ({ navigation }) => {
+const SearchScreen = () => {
 
     const [events, setEvents] = useState([]);
     const [savedEvent, setSavedEvent] = useState([]);
-    
+    const [filtered, setFiltered] = useState([]);
+    const [date, setDate] = useState('24-11-2021');
+    const [data, setData] = useState([]);
+
     useEffect (() => {
+        fetchEvents();
+    }, []);
+
+    const fetchEvents = () => {
         fetch(`https://open-api.myhelsinki.fi/v1/events/`)
         .then(response => response.json())
         .then(responseJson => {
             setEvents(responseJson.data);
+            setData(responseJson.data);
         })
         .catch((error) => {
             Alert.alert('Error', error);
         });
-    }, []);
-
+        
+    }
 
     //luodaan taulu
     useEffect(() => {
@@ -60,17 +69,59 @@ const SearchScreen = ({ navigation }) => {
         );
     };
 
+    const filterByDate = (date) => {
+        const filterByDate = events.filter((item) => (Moment(item.event_dates.starting_day).format('DD-MM-YYYY')) === date)
+        setFiltered(filterByDate);
+        setData(filterByDate);
+    }
+
+    const getAll = () => {
+        let allEvents = events.map((item) => item);
+        setEvents(allEvents);
+        setData(allEvents);
+    }
+    
     return (
-            
             <View style={styles.container}>
-                <View style={styles.picker}>
+                    <View style={styles.picker}>
+                        <View style={styles.datepicker}>
+                            <DatePicker
+                                    style={styles.datePickerStyle}
+                                    date={date} // Initial date from state
+                                    mode="date" // The enum of date, datetime and time
+                                    placeholder="select date"
+                                    format="DD-MM-YYYY"
+                                    
+                                    confirmBtnText="Confirm"
+                                    cancelBtnText="Cancel"
+                                    customStyles={{
+                                        dateIcon: {
+                                        //display: 'none',
+                                        position: 'absolute',
+                                        left: 0,
+                                        top: 4,
+                                        marginLeft: 0
+                                        },
+                                        dateInput: {
+                                        marginLeft: 36,
+                                        backgroundColor: 'white'
+                                        },
+                                    }}
+                                    onDateChange={(date) => {
+                                        setDate(date);
+                                    }}
+                            />
+                            <Button title ="Hae pvm" onPress={() => {filterByDate(date)}} color="blue"/>
+                            <Button title ="Hae kaikki"  onPress={() => {getAll()}} color="blue"/>
+                        </View>
                         <FlatList
-                            
-                            keyExtractor={item => item.id}
-                            renderItem={({item}) =>
+                                keyExtractor={item => item.id}
+                                renderItem={({item}) =>
                             <View style={styles.event}>
-                                <Text style={{fontWeight: "bold"}}> {item.name.fi}</Text>
-                                <Icon name="bookmark" size={30} style={{marginLeft: '87%'}} onPress={() => saveItem(
+                                <Text style={{fontWeight: "bold"}}> 
+                                    {item.name.fi ? (item.name.fi) : (item.name.en) ? (item.name.en) : (item.name.sv) }
+                                </Text>
+                                <Icon name="bookmark" size={30} style={{marginLeft: '90%'}} onPress={() => saveItem(
                                     item.name.fi, 
                                     item.description.intro, 
                                     item.location.address.street_address, 
@@ -78,15 +129,15 @@ const SearchScreen = ({ navigation }) => {
                                     item.location.address.locality,
                                     item.event_dates.starting_day
                                     )} />
-                                <Text>{item.description.intro}</Text>
+                                <Text>{item.description.intro ? (item.description.intro) : ('-')}</Text>
                                 <Text>Paikka: {item.location.address.street_address}, {item.location.address.postal_code}, {item.location.address.locality}</Text>
-                                <Text>Aika:
+                                <Text>Aika: 
                                     {Moment(item.event_dates.starting_day).format('DD.MM.YYYY HH:mm')}
                                 </Text>
                             </View>}
-                        data={events}
-                        ItemSeparatorComponent={listSeparator}/>
-            </View>
+                                data={data}
+                                ItemSeparatorComponent={listSeparator}/>
+                    </View>                  
         </View>            
     );
 };
@@ -102,15 +153,22 @@ const styles = StyleSheet.create({
     },
     picker: {
         flex: 1,
-        top: 30,
+        alignItems: 'center',
         padding: 10,
-        backgroundColor: '#abdbe3'
+        marginTop: 30,
+        backgroundColor: '#abdbe3',
+    },
+    datepicker: {
+        width: "90%", 
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 5, 
     },
     event: {
         flex:1,
-        justifyContent:'space-between',
         padding:10, 
         backgroundColor: 'white', 
         borderRadius: 10
     },
+    
 });

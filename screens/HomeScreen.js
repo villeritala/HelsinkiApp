@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/core";
 import firebase from '../firebase';
 import { getAuth} from 'firebase/auth'
 
-const HomeScreen = ({}) => {
+const HomeScreen = () => {
     
     const auth = getAuth(firebase)
     const navigation = useNavigation()
