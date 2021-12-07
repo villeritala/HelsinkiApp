@@ -3,27 +3,28 @@ import { View, Text, StyleSheet, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Moment from 'moment';
 import * as SQLite from 'expo-sqlite';
+import { useFocusEffect } from '@react-navigation/native';
 
-const db = SQLite.openDatabase('eventdb.db'); //luodaan tietokanta
+const db = SQLite.openDatabase('eventdb.db'); 
 
 const ListScreen = () => {
 
     const [savedEvent, setSavedEvent] = useState([]);
 
-    useEffect (() => {
-        updateList()
-    }, []);
+    useFocusEffect(
+        React.useCallback(() => {
+          updateList();      
+        }, [])
+    );
 
-    //päivitetään lista
     const updateList = () => {
         db.transaction(tx => {
           tx.executeSql('select * from event;', [], (_, { rows }) =>
             setSavedEvent(rows._array)
           ); 
         });
-      }
+    }
 
-    //poistetaan tapahtuma listalta
     const deleteItem = (id) => {
         db.transaction(
         tx => {
@@ -46,6 +47,7 @@ const ListScreen = () => {
 
     return (
         <View style={styles.container}>
+            
             <View style={styles.picker}>
             <FlatList 
                 keyExtractor={item => item.id}
@@ -64,7 +66,6 @@ const ListScreen = () => {
                 </View>} 
                     data={savedEvent} 
                     ItemSeparatorComponent={listSeparator} 
-            
             /> 
             </View> 
         </View>

@@ -5,14 +5,14 @@ import Moment from 'moment';
 import DatePicker from 'react-native-datepicker';
 import * as SQLite from 'expo-sqlite';
 
-const db = SQLite.openDatabase('eventdb.db'); //luodaan tietokanta
+const db = SQLite.openDatabase('eventdb.db'); 
 
 const SearchScreen = () => {
 
     const [events, setEvents] = useState([]);
     const [savedEvent, setSavedEvent] = useState([]);
     const [filtered, setFiltered] = useState([]);
-    const [date, setDate] = useState('24-11-2021');
+    const [date, setDate] = useState(new Date());
     const [data, setData] = useState([]);
 
     useEffect (() => {
@@ -23,23 +23,20 @@ const SearchScreen = () => {
         fetch(`https://open-api.myhelsinki.fi/v1/events/`)
         .then(response => response.json())
         .then(responseJson => {
-            setEvents(responseJson.data);
+            setEvents(responseJson.data.sort((a,b) => a.event_dates.starting_day > b.event_dates.starting_day));
             setData(responseJson.data);
         })
         .catch((error) => {
-            Alert.alert('Error', error);
+            Alert.alert('Error', error.message);
         });
-        
     }
 
-    //luodaan taulu
     useEffect(() => {
         db.transaction(tx => {
             tx.executeSql('create table if not exists event (id integer primary key not null, name text, intro text, street text, postal int, city text, date text);');
         }, null, updateList)
     }, []);
 
-    //tallennetaan event-tauluun
     const saveItem = (name, intro, street, postal, city, date) => {
         db.transaction(tx => {
             tx.executeSql('insert into event (name, intro, street, postal, city, date) values (?, ?, ?, ?, ?, ?);', [name, intro, street, postal, city, date]);    
@@ -48,7 +45,6 @@ const SearchScreen = () => {
         Alert.alert('Tapahtuma tallennettu Tallennetut-osioon')
     }
 
-    //päivitetään lista
     const updateList = () => {
         db.transaction(tx => {
           tx.executeSql('select * from event;', [], (_, { rows }) =>
@@ -96,11 +92,11 @@ const SearchScreen = () => {
                                     cancelBtnText="Cancel"
                                     customStyles={{
                                         dateIcon: {
-                                        //display: 'none',
                                         position: 'absolute',
                                         left: 0,
                                         top: 4,
-                                        marginLeft: 0
+                                        marginLeft: 0,
+                                        color: 'blue'
                                         },
                                         dateInput: {
                                         marginLeft: 36,

@@ -4,8 +4,6 @@ import { View, StyleSheet, ImageBackground, Image, KeyboardAvoidingView, TextInp
 import firebase from '../firebase';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
 
-
-
 const LoginScreen = () => {
 
     const [email, setEmail] = useState('');
@@ -20,6 +18,8 @@ const LoginScreen = () => {
             if (user) {
                 navigation.navigate("Tabs")
                 setIsLogedIn(true)
+                setEmail('')
+                setPassword('')
             }
         })
         return unsubscribe

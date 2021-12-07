@@ -5,7 +5,6 @@ import CalendarScreen from '../screens/Calendar';
 import HomeScreen from '../screens/HomeScreen';
 import ListScreen from '../screens/ListScreen';
 import SearchScreen from '../screens/SearchScreen';
-import LoginScreen from '../screens/LoginScreen';
 import { View, Image, Text } from 'react-native';
 
 
@@ -34,7 +33,6 @@ const Tabs = () => {
             }
           }}
         >
-            
             <Tab.Screen name="Koti" component={HomeScreen} 
                 options={{
                     tabBarIcon: ({focused}) => (
