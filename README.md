@@ -1,4 +1,4 @@
 # HelsinkiApp
 
-#- Firebase authentication
-#- 
+- Firebase authentication
+- 
