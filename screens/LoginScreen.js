@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/core";
 import { View, StyleSheet, ImageBackground, Image, KeyboardAvoidingView, TextInput, TouchableOpacity, Text } from 'react-native';
 import firebase from '../firebase';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 
 const LoginScreen = () => {
 

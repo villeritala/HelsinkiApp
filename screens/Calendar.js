@@ -5,7 +5,7 @@ import * as SQLite from 'expo-sqlite';
 import Moment from 'moment';
 import { useFocusEffect } from '@react-navigation/native';
 
-const db = SQLite.openDatabase('eventdb.db'); //luodaan tietokanta
+const db = SQLite.openDatabase('eventdb.db'); 
 
 const CalendarScreen = () => {
     const [savedEvent, setSavedEvent] = useState([]);
