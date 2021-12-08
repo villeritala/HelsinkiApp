@@ -47,7 +47,6 @@ const ListScreen = () => {
 
     return (
         <View style={styles.container}>
-            
             <View style={styles.picker}>
             <FlatList 
                 keyExtractor={item => item.id}

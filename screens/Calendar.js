@@ -48,7 +48,6 @@ const CalendarScreen = () => {
                 markedDates={markedDay}
             />
             </View>
-            
         </View>
     );
 };

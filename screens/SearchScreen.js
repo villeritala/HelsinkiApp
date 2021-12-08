@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, Alert, Button} from 'react-native';
+import { View, Text, StyleSheet, FlatList, Alert, Button, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Moment from 'moment';
 import DatePicker from 'react-native-datepicker';
@@ -107,8 +107,18 @@ const SearchScreen = () => {
                                         setDate(date);
                                     }}
                             />
-                            <Button title ="Hae pvm" onPress={() => {filterByDate(date)}} color="blue"/>
-                            <Button title ="Hae kaikki"  onPress={() => {getAll()}} color="blue"/>
+                            <TouchableOpacity
+                                onPress={() => {filterByDate(date)}}
+                                style={styles.button}
+                            >
+                                <Text style={styles.buttonText}>Hae päivällä</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => {getAll()}}
+                                style={styles.buttonAll}
+                            >
+                                <Text style={styles.buttonText}>Hae kaikki</Text>
+                            </TouchableOpacity>
                         </View>
                         <FlatList
                                 keyExtractor={item => item.id}
@@ -165,6 +175,26 @@ const styles = StyleSheet.create({
         padding:10, 
         backgroundColor: 'white', 
         borderRadius: 10
+    },
+    button: {
+        backgroundColor: 'blue',
+        width: 110,
+        padding: 10,
+        borderRadius: 30,
+        alignItems: 'center',
+        marginLeft: 5
+    },
+    buttonAll: {
+        backgroundColor: 'blue',
+        width: 90,
+        padding: 10,
+        borderRadius: 30,
+        alignItems: 'center',
+        marginLeft: 5
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 15
     },
     
 });
