@@ -29,7 +29,7 @@ const LoginScreen = () => {
         createUserWithEmailAndPassword(auth, email, password)
         .then(userCredentials => {
             const user = userCredentials.user;
-            console.log('Register in with',user.email);
+            console.log('Register in with', user.email);
         })
         .catch(error => alert(error.message))
     };

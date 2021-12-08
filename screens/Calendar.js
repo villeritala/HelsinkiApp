@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Alert, Text} from 'react-native';
+import { View, StyleSheet, Text} from 'react-native';
 import { CalendarList } from "react-native-calendars";
 import * as SQLite from 'expo-sqlite';
 import Moment from 'moment';
